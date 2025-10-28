@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+  jobsmaster:
+    build:
+      context: ./jobsmaster
+      dockerfile: Dockerfile
+    container_name: jobsmaster
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  worker-1:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile
+    container_name: worker-1
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - API_GATEWAY_URL=${API_GATEWAY_URL}
+      - WORKER_NAME=worker-1
+      - CONCURRENCY=2
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  worker-2:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile
+    container_name: worker-2
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - API_GATEWAY_URL=${API_GATEWAY_URL}
+      - WORKER_NAME=worker-2
+      - CONCURRENCY=2
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  worker-3:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile
+    container_name: worker-3
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - API_GATEWAY_URL=${API_GATEWAY_URL}
+      - WORKER_NAME=worker-3
+      - CONCURRENCY=2
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  redis-data:
+    driver: local

@@ -1,6 +1,6 @@
 node_modules/
 .env
-.pem
+*.pem
 *.log
 .DS_Store
 dist/

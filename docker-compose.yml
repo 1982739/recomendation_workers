@@ -41,7 +41,7 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - API_GATEWAY_URL=https://api.arquijavi.me
+      - API_GATEWAY_URL=https://s5peyln5g8.execute-api.us-east-1.amazonaws.com/primera/
       - AUTH0_DOMAIN=https://dev-mdeadkr0d6ol6an5.us.auth0.com
       - AUTH0_CLIENT_ID=Cbwre2JuO6tEy09EXH4NOCfcoCXcdzap
       - AUTH0_CLIENT_SECRET=jqAYC1ewKpP3YNOfc1HL9p7npvxBB9RhNeTSyY8dNIflbUEzQzyWpOpyBFdvDz94
@@ -62,12 +62,11 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - API_GATEWAY_URL=https://api.arquijavi.me
+      - API_GATEWAY_URL=https://s5peyln5g8.execute-api.us-east-1.amazonaws.com/primera/
       - AUTH0_DOMAIN=https://dev-mdeadkr0d6ol6an5.us.auth0.com
       - AUTH0_CLIENT_ID=Cbwre2JuO6tEy09EXH4NOCfcoCXcdzap
       - AUTH0_CLIENT_SECRET=jqAYC1ewKpP3YNOfc1HL9p7npvxBB9RhNeTSyY8dNIflbUEzQzyWpOpyBFdvDz94
       - AUTH0_AUDIENCE=https://api.arquijavi.me
-
       - WORKER_NAME=worker-2
       - CONCURRENCY=2
     depends_on:
@@ -83,12 +82,11 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - API_GATEWAY_URL=https://api.arquijavi.me
+      - API_GATEWAY_URL=https://s5peyln5g8.execute-api.us-east-1.amazonaws.com/primera/
       - AUTH0_DOMAIN=https://dev-mdeadkr0d6ol6an5.us.auth0.com
       - AUTH0_CLIENT_ID=Cbwre2JuO6tEy09EXH4NOCfcoCXcdzap
       - AUTH0_CLIENT_SECRET=jqAYC1ewKpP3YNOfc1HL9p7npvxBB9RhNeTSyY8dNIflbUEzQzyWpOpyBFdvDz94
       - AUTH0_AUDIENCE=https://api.arquijavi.me
-
       - WORKER_NAME=worker-3
       - CONCURRENCY=2
     depends_on:

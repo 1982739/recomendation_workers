@@ -8,6 +8,13 @@ const apiClient = axios.create({
   },
 });
 
+// ✅ Interceptor: agrega token Auth0 automáticamente a cada request
+apiClient.interceptors.request.use(async (config) => {
+  const token = await authService.getToken();
+  config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+
 apiClient.interceptors.request.use(
   (config) => {
     console.log(`API Request: ${config.method.toUpperCase()} ${config.url}`);

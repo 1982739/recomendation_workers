@@ -1,4 +1,6 @@
 const axios = require('axios');
+const authService = require('./authService');  // ✅ agrega esto
+
 
 const apiClient = axios.create({
   baseURL: process.env.API_GATEWAY_URL,

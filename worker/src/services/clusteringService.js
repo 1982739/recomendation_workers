@@ -37,35 +37,7 @@ class ClusteringService {
     );
   }
 
-  basicRecommendations(targetProperty, allProperties, topN) {
-    const scored = allProperties
-      .filter((p) => p.id !== targetProperty.id)
-      .map((property) => {
-        let score = 0;
-
-        const priceDiff = Math.abs(property.price - targetProperty.price);
-        const priceScore = Math.max(0, 1 - priceDiff / targetProperty.price);
-        score += priceScore * 0.4;
-
-        if (property.city === targetProperty.city) score += 0.3;
-        if (property.bedrooms === targetProperty.bedrooms) score += 0.15;
-        if (property.type === targetProperty.type) score += 0.15;
-
-        return { ...property, score };
-      });
-
-    scored.sort((a, b) => b.score - a.score);
-    return scored.slice(0, topN).map((p) => {
-      delete p.score;
-      return p;
-    });
-  }
-
-  generateRecommendations(targetProperty, allProperties, topN = 5) {
-    if (allProperties.length < 3) {
-      return this.basicRecommendations(targetProperty, allProperties, topN);
-    }
-
+  generateRecommendations(targetProperty, allProperties, topN = 3) {
     try {
       const features = this.prepareFeatures(allProperties);
       const k = Math.min(Math.max(2, Math.floor(allProperties.length / 3)), 10);
@@ -103,7 +75,7 @@ class ClusteringService {
       return sameClusterProperties.slice(0, topN);
     } catch (error) {
       console.error('Error in clustering:', error);
-      return this.basicRecommendations(targetProperty, allProperties, topN);
+      return;
     }
   }
 }

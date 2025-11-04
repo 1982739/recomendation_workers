@@ -1,7 +1,7 @@
 const apiClient = require('../utils/apiClient');
 const clusteringService = require('./clusteringService');
 
-const generateRecommendations = async (propertyId, userId, filters, algorithm) => {
+const generateRecommendations = async (propertyId, userId, filters) => {
   try {
     console.log(`Generating recommendations for property ${propertyId}`);
 
@@ -29,21 +29,11 @@ const generateRecommendations = async (propertyId, userId, filters, algorithm) =
     console.log(`Found ${allProperties.length} candidate properties`);
 
     let recommendations;
-    if (algorithm === 'clustering') {
-      console.log('Using clustering algorithm');
-      recommendations = clusteringService.generateRecommendations(
-        targetProperty,
-        allProperties,
-        3
-      );
-    } else {
-      console.log('Using basic algorithm');
-      recommendations = clusteringService.basicRecommendations(
-        targetProperty,
-        allProperties,
-        3
-      );
-    }
+    recommendations = clusteringService.generateRecommendations(
+      targetProperty,
+      allProperties,
+      3
+    );
 
     console.log(`Generated ${recommendations.length} recommendations`);
     console.log('✅ Result:', JSON.stringify(recommendations, null, 2));
@@ -57,7 +47,6 @@ const generateRecommendations = async (propertyId, userId, filters, algorithm) =
         price: targetProperty.price,
       },
       recommendations,
-      algorithm,
       count: recommendations.length,
       generatedAt: new Date().toISOString(),
     };

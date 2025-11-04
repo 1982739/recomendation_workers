@@ -3,7 +3,7 @@ const { recommendationsQueue } = require('../queue');
 // POST /job
 const createJob = async (req, res) => {
   try {
-    const { propertyId, userId, filters, algorithm } = req.body;
+    const { propertyId, userId, filters} = req.body;
 
     if (!propertyId) {
       return res.status(400).json({
@@ -18,7 +18,6 @@ const createJob = async (req, res) => {
         propertyId,
         userId,
         filters: filters || {},
-        algorithm: algorithm || 'basic',
         timestamp: new Date().toISOString(),
       },
       {

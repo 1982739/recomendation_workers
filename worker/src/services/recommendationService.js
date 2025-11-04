@@ -34,18 +34,19 @@ const generateRecommendations = async (propertyId, userId, filters, algorithm) =
       recommendations = clusteringService.generateRecommendations(
         targetProperty,
         allProperties,
-        5
+        3
       );
     } else {
       console.log('Using basic algorithm');
       recommendations = clusteringService.basicRecommendations(
         targetProperty,
         allProperties,
-        5
+        3
       );
     }
 
     console.log(`Generated ${recommendations.length} recommendations`);
+    console.log('✅ Result:', JSON.stringify(recommendations, null, 2));
 
     return {
       propertyId,
